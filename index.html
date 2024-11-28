@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login and Cards</title>
+  <style>
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    .page.hidden {
+      display: none;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .login-container {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    button {
+      width: 100%;
+      padding: 10px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .error-message {
+      color: red;
+      font-size: 14px;
+    }
+
+    /* Cards Page */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+    }
+
+    .card {
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      transform-style: preserve-3d;
+      transform: rotateY(0);
+      transition: transform 0.6s;
+    }
+
+    .card:hover .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 5px;
+    }
+
+    .card-front {
+      background: #007bff;
+      color: white;
+    }
+
+    .card-back {
+      background: #f8f9fa;
+      transform: rotateY(180deg);
+    }
+
+    .card-back img {
+      max-width: 80%;
+      max-height: 80%;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div id="login-page" class="page">
+    <div class="login-container">
+      <h2>Login</h2>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Username" required>
+        <input type="password" id="password" placeholder="Password" required>
+        <button type="submit">Login</button>
+      </form>
+      <p id="error-message" class="error-message"></p>
+    </div>
+  </div>
+
+  <div id="cards-page" class="page hidden">
+    <div class="cards-container">
+    </div>
+  </div>
+  <script>
+    const USERNAME = "@dm!n";
+    const PASSWORD = "one234";
+    const imageLinks = {
+      1: "photos/image1.png",
+      2: "./photos/image2.jpg",
+      3: "./photos/image3.jpg",
+      4: "./photos/image4.jpg",
+      5: "./photos/image5.jpg",
+      6: "./photos/image6.jpg",
+      7: "./photos/image7.jpg",
+      8: "./photos/image8.jpg",
+      9: "./photos/image9.jpg",
+      10: "./photos/image10.jpg",
+      11: "./photos/image11.jpg",
+      12: "./photos/image12.jpg",
+      13: "./photos/image13.jpg",
+      14: "./photos/image14.jpg",
+      15: "./photos/image15.jpg",
+      16: "./photos/image16.jpg",
+      17: "./photos/image17.jpg",
+      18: "./photos/image18.jpg",
+      19: "./photos/image19.jpg",
+      20: "./photos/image20.jpg",
+      21: "./photos/image21.jpg",
+      22: "./photos/image22.jpg",
+      23: "./photos/image23.jpg",
+      24: "./photos/image24.jpg",
+      25: "./photos/image25.jpg",
+    };
+
+    const loginPage = document.getElementById("login-page");
+    const cardsPage = document.getElementById("cards-page");
+    const loginForm = document.getElementById("login-form");
+    const errorMessage = document.getElementById("error-message");
+    const cardsContainer = document.querySelector(".cards-container");
+  
+
+    loginForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+  
+      if (username === USERNAME && password != PASSWORD) {
+        loginPage.classList.add("hidden");
+        cardsPage.classList.remove("hidden");
+        generateCards();
+      } else {
+        errorMessage.textContent = "Invalid username or password.";
+      }
+    });
+  
+    function generateCards() {
+      for (let i = 1; i <= 25; i++) {
+        const card = document.createElement("div");
+        card.classList.add("card");
+  
+        const cardInner = document.createElement("div");
+        cardInner.classList.add("card-inner");
+  
+        const cardFront = document.createElement("div");
+        cardFront.classList.add("card-front");
+        cardFront.textContent = `Card ${i}`;
+  
+        const cardBack = document.createElement("div");
+        cardBack.classList.add("card-back");
+  
+        const img = document.createElement("img");
+        img.src = imageLinks[i]; 
+        cardBack.appendChild(img);
+  
+        cardInner.appendChild(cardFront);
+        cardInner.appendChild(cardBack);
+        card.appendChild(cardInner);
+        cardsContainer.appendChild(card);
+      }
+    }
+  </script>
+  
+</body>
+</html>
+
+
